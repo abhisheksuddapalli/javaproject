@@ -1,0 +1,41 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new FileReader("log.txt"));
+        String line;
+
+        int error = 0, warn = 0;
+        HashMap<String, Integer> map = new HashMap<>();
+
+        while ((line = br.readLine()) != null) {
+
+            if (line.contains("ERROR")) error++;
+            if (line.contains("WARN")) warn++;
+
+            String[] parts = line.split(" ");
+            String type = parts[0]; 
+
+            map.put(type, map.getOrDefault(type, 0) + 1);
+        }
+        br.close();
+        System.out.println("Errors: " + error);
+        System.out.println("Warnings: " + warn);
+
+        System.out.println("Summary:");
+        for (String k : map.keySet())
+            System.out.println(k + " : " + map.get(k));
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter keyword: ");
+        String key = sc.nextLine();
+
+        br = new BufferedReader(new FileReader("log.txt"));
+        while ((line = br.readLine()) != null) {
+            if (line.contains(key))
+                System.out.println(line);
+        }
+        br.close();
+    }
+}
