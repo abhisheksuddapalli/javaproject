@@ -1,0 +1,68 @@
+import java.util.*;
+import java.io.*;
+class Product {
+    String name;
+    int qty;
+    double price;
+    Product(String n, int q, double p) {
+        name = n;
+        qty = q;
+        price = p;
+    }
+}
+public class Main {
+    public static void main(String[] args) throws Exception {
+
+        ArrayList<Product> cart = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n1.Add 2.Remove 3.Update 4.Total 5.Save 6.Exit");
+            int ch = sc.nextInt(); sc.nextLine();
+            switch (ch) {
+                case 1:
+                    System.out.print("Name: ");
+                    String n = sc.nextLine();
+                    System.out.print("Qty: ");
+                    int q = sc.nextInt();
+                    System.out.print("Price: ");
+                    double p = sc.nextDouble();
+                    cart.add(new Product(n, q, p));
+                    break;
+
+                case 2:
+                    System.out.print("Enter name: ");
+                    String r = sc.nextLine();
+                    cart.removeIf(x -> x.name.equalsIgnoreCase(r));
+                    break;
+
+                case 3:
+                    System.out.print("Enter name: ");
+                    String u = sc.nextLine();
+                    for (Product x : cart)
+                        if (x.name.equalsIgnoreCase(u)) {
+                            System.out.print("New Qty: ");
+                            x.qty = sc.nextInt();
+                        }
+                    break;
+                case 4:
+                    double total = 0;
+                    for (Product x : cart)
+                        total += x.qty * x.price;
+                    System.out.println("Total = " + total);
+                    break;
+
+                case 5:
+                    FileWriter fw = new FileWriter("bill.txt");
+                    for (Product x : cart)
+                        fw.write(x.name + " " + x.qty + " " + x.price + "\n");
+                    fw.close();
+                    System.out.println("Saved!");
+                    break;
+
+                case 6:
+                    System.exit(0);
+            }
+        }
+    }
+}
