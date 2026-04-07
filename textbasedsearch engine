@@ -1,0 +1,39 @@
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<String> lines = new ArrayList<>();
+        lines.add("Java is powerful language");
+        lines.add("Python is easy language");
+        lines.add("Java supports OOP concepts");
+        lines.add("Search engine using Java");
+        lines.add("Error handling is important");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter keyword: ");
+        String key = sc.nextLine().toLowerCase();
+
+        int count = 0;
+        HashMap<String, Integer> freq = new HashMap<>();
+
+        System.out.println("\nMatching Lines:");
+
+        for (String line : lines) {
+            String lower = line.toLowerCase();
+            String[] words = lower.split(" ");
+            for (String w : words) {
+                freq.put(w, freq.getOrDefault(w, 0) + 1);
+            }
+
+            if (lower.contains(key)) {
+                count++;
+                String highlighted = line.replaceAll("(?i)" + key, "[" + key.toUpperCase() + "]");
+                System.out.println(highlighted);
+            }
+        }
+
+        System.out.println("\nTotal Matches: " + count);
+        System.out.println("\nWord Frequency:");
+        for (String w : freq.keySet()) {
+            System.out.println(w + " : " + freq.get(w));
+        }
+    }
+}
